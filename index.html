@@ -18,21 +18,27 @@
     <main>
         <section class="comics-section">
             <h2>Latest Manhwa</h2>
-            <div class="comics" id="comics-container">
-                <!-- Manhwa titles will be inserted here dynamically -->
+            <div class="comics" id="latest-comics-container">
+                <!-- Latest manhwa titles will be inserted here dynamically -->
+            </div>
+        </section>
+        <section class="comics-section">
+            <h2>Popular Manhwa</h2>
+            <div class="comics" id="popular-comics-container">
+                <!-- Popular manhwa titles will be inserted here dynamically -->
             </div>
         </section>
     </main>
     <script>
-        // Function to fetch manhwa titles from the MangaDex API
-        async function fetchManhwa() {
+        // Function to fetch latest manhwa titles from the MangaDex API
+        async function fetchLatestManhwa() {
             try {
                 const response = await fetch('https://api.mangadex.org/manga?translatedLanguage[]=en&limit=10');
                 const data = await response.json();
-                const comicsContainer = document.getElementById('comics-container');
-                comicsContainer.innerHTML = ''; // Clear existing content
+                const latestComicsContainer = document.getElementById('latest-comics-container');
+                latestComicsContainer.innerHTML = ''; // Clear existing content
 
-                // Loop through the fetched manhwa data
+                // Loop through the fetched latest manhwa data
                 data.data.forEach(manhwa => {
                     const card = document.createElement('div');
                     card.className = 'comic-card';
@@ -40,15 +46,41 @@
                         <img src="${manhwa.attributes.coverImage ? 'https://uploads.mangadex.org/covers/' + manhwa.id + '/' + manhwa.attributes.coverImage.fileName : 'https://via.placeholder.com/150'}" alt="${manhwa.attributes.title.en}">
                         <h3>${manhwa.attributes.title.en || 'Unknown Title'}</h3>
                     `;
-                    comicsContainer.appendChild(card);
+                    latestComicsContainer.appendChild(card);
                 });
             } catch (error) {
-                console.error('Error fetching manhwa:', error);
+                console.error('Error fetching latest manhwa:', error);
             }
         }
 
-        // Call the fetch function when the page loads
-        window.onload = fetchManhwa;
+        // Function to fetch popular manhwa titles from the MangaDex API
+        async function fetchPopularManhwa() {
+            try {
+                const response = await fetch('https://api.mangadex.org/manga?translatedLanguage[]=en&limit=10&sort=popular');
+                const data = await response.json();
+                const popularComicsContainer = document.getElementById('popular-comics-container');
+                popularComicsContainer.innerHTML = ''; // Clear existing content
+
+                // Loop through the fetched popular manhwa data
+                data.data.forEach(manhwa => {
+                    const card = document.createElement('div');
+                    card.className = 'comic-card';
+                    card.innerHTML = `
+                        <img src="${manhwa.attributes.coverImage ? 'https://uploads.mangadex.org/covers/' + manhwa.id + '/' + manhwa.attributes.coverImage.fileName : 'https://via.placeholder.com/150'}" alt="${manhwa.attributes.title.en}">
+                        <h3>${manhwa.attributes.title.en || 'Unknown Title'}</h3>
+                    `;
+                    popularComicsContainer.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Error fetching popular manhwa:', error);
+            }
+        }
+
+        // Call the fetch functions when the page loads
+        window.onload = () => {
+            fetchLatestManhwa();
+            fetchPopularManhwa();
+        };
     </script>
 </body>
 </html>
