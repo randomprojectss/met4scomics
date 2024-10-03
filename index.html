@@ -3,31 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comic Viewer</title>
+    <title>Met4Comics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Comic Viewer</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-        <button id="themeToggle">Switch to Dark Mode</button>
+        <h1>Met4Comics</h1>
+        <div class="search-container">
+            <input type="text" placeholder="Search comics..." class="search-bar">
+            <button class="search-button">Search</button>
+        </div>
     </header>
-
     <main>
-        <h2>Welcome to the Comic Viewer!</h2>
-        <p>Click the button above to switch between light and dark modes.</p>
+        <section class="comics-section">
+            <h2>Latest Comics</h2>
+            <div class="comics">
+                <div class="comic-card">Comic 1</div>
+                <div class="comic-card">Comic 2</div>
+                <div class="comic-card">Comic 3</div>
+                <div class="comic-card">Comic 4</div>
+                <div class="comic-card">Comic 5</div>
+            </div>
+        </section>
     </main>
-
-    <footer>
-        <p>&copy; 2024 Comic Viewer</p>
-    </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>
