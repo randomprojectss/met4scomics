@@ -11,13 +11,18 @@
     <header>
         <h1>Met4Comics</h1>
         <div class="search-container">
-            <input type="text" placeholder="Search comics..." class="search-bar">
-            <button class="search-button">Search</button>
+            <div class="search-box">
+                <input type="text" placeholder="Search comics..." class="search-bar">
+                <button class="search-button">Search</button>
+            </div>
         </div>
         <div class="settings-container">
             <button class="settings-button">⚙️</button>
             <div class="dropdown-menu">
-                <button class="dropdown-item" onclick="toggleTheme()">Theme</button>
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle" onchange="toggleTheme()">
+                    <span class="slider"></span>
+                </label>
                 <button class="dropdown-item" onclick="showAbout()">About Us</button>
                 <button class="dropdown-item" onclick="showAccount()">My Account</button>
             </div>
