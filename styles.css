@@ -4,10 +4,12 @@ body {
     color: #ffffff;
     margin: 0;
     padding: 0;
+    font-size: 18px; /* Increased text size */
 }
 
 h1 {
     text-align: center;
+    font-size: 2.5rem; /* Increased title size */
 }
 
 .search-container {
@@ -16,14 +18,22 @@ h1 {
     margin: 20px;
 }
 
+.search-box {
+    display: flex;
+    align-items: center;
+    border-radius: 30px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.1); /* Dark & transparent */
+}
+
 .search-bar {
     padding: 10px;
     border: none;
-    border-radius: 25px;
-    background-color: rgba(255, 255, 255, 0.1); /* Dark & transparent */
+    background: transparent;
     color: white;
     width: 300px;
     transition: background-color 0.3s;
+    font-size: 18px; /* Increased input text size */
 }
 
 .search-bar::placeholder {
@@ -32,13 +42,13 @@ h1 {
 
 .search-button {
     padding: 10px 20px;
-    margin-left: 10px;
     border: none;
     border-radius: 25px;
     background-color: #007bff; /* Button color */
     color: white;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 18px; /* Increased button text size */
 }
 
 .search-button:hover {
@@ -82,6 +92,7 @@ h1 {
     cursor: pointer;
     text-align: left;
     width: 100%;
+    font-size: 18px; /* Increased dropdown item text size */
 }
 
 .dropdown-item:hover {
@@ -120,24 +131,74 @@ h1 {
     }
 }
 
+/* Switch styles */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px; /* Rounded edges */
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%; /* Circular knob */
+}
+
+input:checked + .slider {
+    background-color: #2196F3; /* Active switch color */
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px); /* Move knob to the right */
+}
+
 /* Light theme styles */
 .light-theme {
     background-color: #ffffff; /* Light background */
-    color: #000000; /* Dark text */
+    color: #000000;
 }
 
-.light-theme .search-bar {
+.light-theme .search-box {
     background-color: rgba(0, 0, 0, 0.1); /* Light & transparent */
 }
 
+.light-theme .search-button {
+    background-color: #007bff; /* Button color */
+}
+
 .light-theme .comic-card {
-    background-color: #f0f0f0; /* Card background for light theme */
+    background-color: #f0f0f0; /* Light card background */
 }
 
 .light-theme .dropdown-menu {
-    background-color: #f0f0f0; /* Dropdown background for light theme */
+    background-color: #f8f8f8; /* Light dropdown background */
 }
 
-.light-theme .dropdown-item:hover {
-    background-color: rgba(0, 0, 0, 0.1); /* Dark highlight on hover */
+.light-theme .dropdown-item {
+    color: #000000; /* Dark text for dropdown items */
 }
