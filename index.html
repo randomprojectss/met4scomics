@@ -3,55 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comic Website</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Met4Comics</title>
+    <style>
+        body {
+            background-color: #1d2a35; /* Dark blue background */
+            color: #ffffff; /* White text */
+            font-family: 'Arial', sans-serif; /* Use your preferred font */
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        section {
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        input[type="search"] {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            border: none;
+            color: #fff;
+            padding: 10px;
+            width: calc(100% - 20px);
+            margin-bottom: 20px;
+        }
+
+        .divider {
+            width: 100%;
+            height: 2px;
+            background-color: #ccc;
+            margin: 20px 0;
+        }
+
+        .curved-box {
+            border-radius: 12px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .settings {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .settings-panel {
+            display: none;
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+            z-index: 10;
+        }
+
+        .settings-panel.show {
+            display: block;
+        }
+
+        .toggle {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header class="main-header">
-        <div class="container">
-            <h1>ComicK</h1>
-            <div class="search-bar-container">
-                <input type="text" class="search-bar" placeholder="Search for manhwa...">
-            </div>
-            <div class="header-menu">
-                <button class="settings-button">⚙️</button>
-                <button class="profile-button">👤</button>
-            </div>
+    <div class="settings">
+        <button id="settingsBtn">⚙️ Settings</button>
+        <div id="settingsPanel" class="settings-panel">
+            <label class="toggle">
+                <input type="checkbox" id="themeSwitch"> Dark Mode
+            </label>
         </div>
-    </header>
+    </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <section class="following-section">
+    <div class="container">
+        <h1>Met4Comics</h1>
+        <input type="search" placeholder="Search for a Manhwa..." id="manhwaSearch">
+        <div class="divider"></div>
+
+        <section id="following">
             <h2>Following</h2>
-            <div class="manhwa-grid">
-                <!-- Manhwa cards will be added dynamically -->
-            </div>
+            <div class="curved-box"> <!-- Add your followed manhwas here --> </div>
         </section>
 
-        <section class="reading-history-section">
+        <section id="reading-history">
             <h2>Reading History</h2>
-            <div class="manhwa-grid">
-                <!-- Manhwa cards will be added dynamically -->
-            </div>
+            <div class="curved-box"> <!-- Add your reading history here --> </div>
         </section>
 
-        <section class="most-recent-popular-section">
+        <section id="most-recent-popular">
             <h2>Most Recent Popular</h2>
-            <div class="manhwa-grid">
-                <!-- Manhwa cards will be added dynamically -->
-            </div>
+            <div class="curved-box"> <!-- Add popular manhwas here --> </div>
         </section>
-    </main>
+    </div>
 
-    <!-- Sidebar Section for Recently Added -->
-    <aside class="sidebar">
-        <h2>Recently Added / Complete Series</h2>
-        <ul class="recently-added-list">
-            <!-- Recently added manhwa titles will be added dynamically -->
-        </ul>
-    </aside>
+    <script>
+        // Toggle settings panel visibility
+        document.getElementById("settingsBtn").addEventListener("click", function() {
+            const panel = document.getElementById("settingsPanel");
+            panel.classList.toggle("show");
+        });
+
+        // Toggle dark mode
+        document.getElementById("themeSwitch").addEventListener("change", function() {
+            document.body.classList.toggle("light-theme");
+        });
+
+        // Search functionality placeholder
+        document.getElementById("manhwaSearch").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                const searchTerm = e.target.value;
+                alert(`Searching for: ${searchTerm}`); // Placeholder action
+                // Here you would implement the search functionality
+            }
+        });
+    </script>
 </body>
-<script src="script.js"></script>
 </html>
