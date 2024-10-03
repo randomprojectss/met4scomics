@@ -14,6 +14,14 @@
             <input type="text" placeholder="Search comics..." class="search-bar">
             <button class="search-button">Search</button>
         </div>
+        <div class="settings-container">
+            <button class="settings-button">⚙️</button>
+            <div class="dropdown-menu">
+                <button class="dropdown-item" onclick="toggleTheme()">Theme</button>
+                <button class="dropdown-item" onclick="showAbout()">About Us</button>
+                <button class="dropdown-item" onclick="showAccount()">My Account</button>
+            </div>
+        </div>
     </header>
     <main>
         <section class="comics-section">
@@ -76,10 +84,31 @@
             }
         }
 
+        // Toggle theme between dark and light
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+        }
+
+        // Show About Us section (placeholder function)
+        function showAbout() {
+            alert("About Us content goes here.");
+        }
+
+        // Show My Account section (placeholder function)
+        function showAccount() {
+            alert("My Account content goes here.");
+        }
+
         // Call the fetch functions when the page loads
         window.onload = () => {
             fetchLatestManhwa();
             fetchPopularManhwa();
+        };
+
+        // Dropdown toggle animation
+        document.querySelector('.settings-button').onclick = function() {
+            const dropdown = document.querySelector('.dropdown-menu');
+            dropdown.classList.toggle('show');
         };
     </script>
 </body>
