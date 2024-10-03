@@ -6,37 +6,59 @@
     <title>Met4Comics</title>
     <style>
         body {
-            background-color: #1d2a35; /* Dark blue background */
+            background-color: #1d2a35; /* Dark background */
             color: #ffffff; /* White text */
-            font-family: 'Arial', sans-serif; /* Use your preferred font */
+            font-family: 'Arial', sans-serif; /* Font style */
             margin: 0;
             padding: 0;
         }
 
         .container {
+            max-width: 1200px;
+            margin: auto;
             padding: 20px;
         }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
         }
 
-        section {
-            margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 10px;
+        h1 {
+            font-size: 2rem;
         }
 
         input[type="search"] {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            border: none;
-            color: #fff;
             padding: 10px;
-            width: calc(100% - 20px);
-            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .section {
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .section h2 {
+            margin: 0 0 10px 0;
+        }
+
+        .manhwa-card {
+            display: inline-block;
+            width: calc(25% - 20px); /* Four cards per row */
+            margin: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
         }
 
         .divider {
@@ -44,12 +66,6 @@
             height: 2px;
             background-color: #ccc;
             margin: 20px 0;
-        }
-
-        .curved-box {
-            border-radius: 12px;
-            padding: 15px;
-            background-color: rgba(255, 255, 255, 0.05);
         }
 
         .settings {
@@ -74,6 +90,19 @@
         .toggle {
             margin-top: 10px;
         }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .manhwa-card {
+                width: calc(50% - 20px); /* Two cards per row */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .manhwa-card {
+                width: 100%; /* One card per row */
+            }
+        }
     </style>
 </head>
 <body>
@@ -87,23 +116,56 @@
     </div>
 
     <div class="container">
-        <h1>Met4Comics</h1>
-        <input type="search" placeholder="Search for a Manhwa..." id="manhwaSearch">
+        <header>
+            <h1>Met4Comics</h1>
+            <input type="search" placeholder="Search for a Manhwa..." id="manhwaSearch">
+        </header>
+
         <div class="divider"></div>
 
-        <section id="following">
+        <section class="section" id="following">
             <h2>Following</h2>
-            <div class="curved-box"> <!-- Add your followed manhwas here --> </div>
+            <div class="manhwa-card"> <!-- Example Manhwa Card -->
+                <img src="path/to/image1.jpg" alt="Manhwa Title" style="width: 100%; border-radius: 10px;">
+                <h3>Title 1</h3>
+                <p>Chap 522</p>
+            </div>
+            <div class="manhwa-card">
+                <img src="path/to/image2.jpg" alt="Manhwa Title" style="width: 100%; border-radius: 10px;">
+                <h3>Title 2</h3>
+                <p>Chap 185</p>
+            </div>
+            <!-- Add more manhwa cards as needed -->
         </section>
 
-        <section id="reading-history">
+        <section class="section" id="reading-history">
             <h2>Reading History</h2>
-            <div class="curved-box"> <!-- Add your reading history here --> </div>
+            <div class="manhwa-card"> <!-- Example Manhwa Card -->
+                <img src="path/to/image3.jpg" alt="Manhwa Title" style="width: 100%; border-radius: 10px;">
+                <h3>Title 3</h3>
+                <p>Chap 276</p>
+            </div>
+            <div class="manhwa-card">
+                <img src="path/to/image4.jpg" alt="Manhwa Title" style="width: 100%; border-radius: 10px;">
+                <h3>Title 4</h3>
+                <p>Chap 191</p>
+            </div>
+            <!-- Add more manhwa cards as needed -->
         </section>
 
-        <section id="most-recent-popular">
+        <section class="section" id="most-recent-popular">
             <h2>Most Recent Popular</h2>
-            <div class="curved-box"> <!-- Add popular manhwas here --> </div>
+            <div class="manhwa-card"> <!-- Example Manhwa Card -->
+                <img src="path/to/image5.jpg" alt="Manhwa Title" style="width: 100%; border-radius: 10px;">
+                <h3>Title 5</h3>
+                <p>#1</p>
+            </div>
+            <div class="manhwa-card">
+                <img src="path/to/image6.jpg" alt="Manhwa Title" style="width: 100%; border-radius: 10px;">
+                <h3>Title 6</h3>
+                <p>#2</p>
+            </div>
+            <!-- Add more manhwa cards as needed -->
         </section>
     </div>
 
