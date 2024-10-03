@@ -1,215 +1,186 @@
+/* General Body Styles */
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #121212; /* Dark background */
+    background-color: #1e2a38;
     color: #ffffff;
     margin: 0;
     padding: 0;
-    font-size: 18px; /* Increased text size */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-header {
+/* Header Styling */
+.main-header {
+    width: 100%;
+    background-color: #2c3e50;
+    padding: 20px;
+}
+
+.container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background-color: #1a1a1a; /* Dark header */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 h1 {
-    font-size: 2.5rem; /* Increased title size */
+    font-size: 2.5rem;
     margin: 0;
+    color: #ffffff;
 }
 
-.settings-container {
+/* Settings Button and Dropdown */
+.settings {
     position: relative;
 }
 
 .settings-button {
-    background: none;
+    background-color: #3498db;
     border: none;
+    padding: 10px 15px;
     color: white;
-    font-size: 24px;
+    font-size: 1rem;
     cursor: pointer;
-    padding: 0;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.settings-button:hover {
+    background-color: #2980b9;
 }
 
 .dropdown-menu {
     display: none;
     position: absolute;
+    top: 40px;
     right: 0;
-    background-color: #1a1a1a; /* Dark background for dropdown */
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #34495e;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 100;
 }
 
-.dropdown-menu.show {
-    display: block; /* Show dropdown when toggled */
+.settings-button:focus + .dropdown-menu,
+.dropdown-menu:hover {
+    display: block;
 }
 
 .dropdown-item {
-    padding: 10px;
     color: white;
-    background: none;
-    border: none;
-    cursor: pointer;
-    text-align: left;
-    width: 100%;
-    font-size: 18px; /* Increased dropdown item text size */
+    text-decoration: none;
+    display: block;
+    margin: 10px 0;
+    font-size: 1rem;
 }
 
 .dropdown-item:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Highlight on hover */
+    text-decoration: underline;
+}
+
+/* Theme Switcher */
+.theme-switch {
+    display: flex;
+    align-items: center;
+}
+
+.slider {
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    position: relative;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.slider:before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: white;
+    border-radius: 50%;
+    top: 1px;
+    left: 1px;
+    transition: transform 0.3s ease;
+}
+
+/* Search Section */
+.search-section {
+    margin: 20px;
+    text-align: center;
+    width: 100%;
 }
 
 .search-container {
     display: flex;
     justify-content: center;
-    margin: 20px;
-}
-
-.search-box {
-    display: flex;
     align-items: center;
-    border-radius: 30px;
-    overflow: hidden;
-    background-color: rgba(255, 255, 255, 0.1); /* Dark & transparent */
+    margin-bottom: 10px;
 }
 
 .search-bar {
-    padding: 10px;
-    border: none;
-    background: transparent;
-    color: white;
     width: 300px;
-    transition: background-color 0.3s;
-    font-size: 18px; /* Increased input text size */
-}
-
-.search-bar::placeholder {
-    color: rgba(255, 255, 255, 0.6); /* Light placeholder text */
+    padding: 10px;
+    border: 2px solid #3498db;
+    border-radius: 12px;
+    background-color: #2c3e50;
+    color: white;
+    font-size: 1rem;
 }
 
 .search-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 25px;
-    background-color: #007bff; /* Button color */
+    background-color: #3498db;
     color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    margin-left: 10px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 18px; /* Increased button text size */
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
 }
 
 .search-button:hover {
-    background-color: #0056b3; /* Darker button on hover */
+    background-color: #2980b9;
 }
 
-.comics-section {
-    margin: 20px;
+/* Decorative Underline */
+.underline {
+    height: 2px;
+    width: 80%;
+    background-color: #3498db;
+    margin: 0 auto;
 }
 
-.comics {
-    display: flex;
-    flex-wrap: wrap;
+/* Popular and Latest Sections */
+.popular-section, .latest-section {
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.manhwa-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 20px;
-    justify-content: center; /* Centering the comics section */
 }
 
-.comic-card {
-    background-color: #1e1e1e; /* Card background */
-    border-radius: 10px;
-    padding: 10px;
-    width: 150px; /* Fixed width for cards */
+.manhwa-card {
+    background-color: #2c3e50;
+    padding: 20px;
+    border-radius: 8px;
     text-align: center;
-    transition: transform 0.3s; /* Animation on hover */
+    color: white;
+    transition: transform 0.3s ease;
 }
 
-.comic-card:hover {
-    transform: translateY(-5px); /* Lift effect on hover */
-}
-
-.comic-card img {
-    width: 100%;
-    border-radius: 5px;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-/* Switch styles */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 34px; /* Rounded edges */
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%; /* Circular knob */
-}
-
-input:checked + .slider {
-    background-color: #2196F3;
-}
-
-input:checked + .slider:before {
-    transform: translateX(26px);
-}
-
-/* Light theme styles */
-.light-theme {
-    background-color: #ffffff; /* Light background */
-    color: #000000;
-}
-
-.light-theme .search-box {
-    background-color: rgba(0, 0, 0, 0.1); /* Light & transparent */
-}
-
-.light-theme .search-button {
-    background-color: #007bff; /* Button color */
-}
-
-.light-theme .comic-card {
-    background-color: #f0f0f0; /* Light card background */
-}
-
-.light-theme .dropdown-menu {
-    background-color: #f8f8f8; /* Light dropdown background */
-}
-
-.light-theme .dropdown-item {
-    color: #000000; /* Dark text for dropdown items */
+.manhwa-card:hover {
+    transform: scale(1.05);
 }
