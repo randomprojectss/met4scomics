@@ -1,30 +1,9 @@
-const comics = [
-    'https://via.placeholder.com/600x400.png?text=Comic+1',
-    'https://via.placeholder.com/600x400.png?text=Comic+2',
-    'https://via.placeholder.com/600x400.png?text=Comic+3',
-];
+// Dark/Light Mode Toggle
+const themeToggle = document.getElementById('themeToggle');
+let isDarkMode = false;
 
-let currentComicIndex = 0;
-
-const comicElement = document.getElementById('comic');
-
-function displayComic(index) {
-    comicElement.innerHTML = `<img src="${comics[index]}" alt="Comic ${index + 1}" class="comic">`;
-}
-
-document.getElementById('prevBtn').addEventListener('click', () => {
-    if (currentComicIndex > 0) {
-        currentComicIndex--;
-        displayComic(currentComicIndex);
-    }
+themeToggle.addEventListener('click', () => {
+    isDarkMode = !isDarkMode; // Toggle the mode
+    document.body.classList.toggle('dark-mode', isDarkMode); // Add/remove dark mode class
+    themeToggle.textContent = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'; // Update button text
 });
-
-document.getElementById('nextBtn').addEventListener('click', () => {
-    if (currentComicIndex < comics.length - 1) {
-        currentComicIndex++;
-        displayComic(currentComicIndex);
-    }
-});
-
-// Initial comic display
-displayComic(currentComicIndex);
