@@ -30,21 +30,21 @@
         </section>
     </main>
     <script>
-        // Function to fetch latest manhwa titles from the MangaDex API
+        // Function to fetch latest manhwa titles from the MangaPlus API
         async function fetchLatestManhwa() {
             try {
-                const response = await fetch('https://api.mangadex.org/manga?translatedLanguage[]=en&limit=10');
+                const response = await fetch('https://mangaplus.api.riotgames.com/v1/comics?limit=10');
                 const data = await response.json();
                 const latestComicsContainer = document.getElementById('latest-comics-container');
                 latestComicsContainer.innerHTML = ''; // Clear existing content
 
                 // Loop through the fetched latest manhwa data
-                data.data.forEach(manhwa => {
+                data.forEach(manhwa => {
                     const card = document.createElement('div');
                     card.className = 'comic-card';
                     card.innerHTML = `
-                        <img src="${manhwa.attributes.coverImage ? 'https://uploads.mangadex.org/covers/' + manhwa.id + '/' + manhwa.attributes.coverImage.fileName : 'https://via.placeholder.com/150'}" alt="${manhwa.attributes.title.en}">
-                        <h3>${manhwa.attributes.title.en || 'Unknown Title'}</h3>
+                        <img src="${manhwa.cover_image}" alt="${manhwa.title}">
+                        <h3>${manhwa.title || 'Unknown Title'}</h3>
                     `;
                     latestComicsContainer.appendChild(card);
                 });
@@ -53,21 +53,21 @@
             }
         }
 
-        // Function to fetch popular manhwa titles from the MangaDex API
+        // Function to fetch popular manhwa titles from the MangaPlus API
         async function fetchPopularManhwa() {
             try {
-                const response = await fetch('https://api.mangadex.org/manga?translatedLanguage[]=en&limit=10&sort=popular');
+                const response = await fetch('https://mangaplus.api.riotgames.com/v1/popular?limit=10');
                 const data = await response.json();
                 const popularComicsContainer = document.getElementById('popular-comics-container');
                 popularComicsContainer.innerHTML = ''; // Clear existing content
 
                 // Loop through the fetched popular manhwa data
-                data.data.forEach(manhwa => {
+                data.forEach(manhwa => {
                     const card = document.createElement('div');
                     card.className = 'comic-card';
                     card.innerHTML = `
-                        <img src="${manhwa.attributes.coverImage ? 'https://uploads.mangadex.org/covers/' + manhwa.id + '/' + manhwa.attributes.coverImage.fileName : 'https://via.placeholder.com/150'}" alt="${manhwa.attributes.title.en}">
-                        <h3>${manhwa.attributes.title.en || 'Unknown Title'}</h3>
+                        <img src="${manhwa.cover_image}" alt="${manhwa.title}">
+                        <h3>${manhwa.title || 'Unknown Title'}</h3>
                     `;
                     popularComicsContainer.appendChild(card);
                 });
