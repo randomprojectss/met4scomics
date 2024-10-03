@@ -1,77 +1,143 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #121212;
+    background-color: #121212; /* Dark background */
     color: #ffffff;
-}
-
-header {
-    text-align: center;
-    padding: 20px;
-    background-color: #1e1e1e;
-    border-radius: 20px;
-    margin: 20px;
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
+    text-align: center;
 }
 
 .search-container {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin: 20px;
 }
 
 .search-bar {
     padding: 10px;
     border: none;
-    border-radius: 20px 0 0 20px;
-    outline: none;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.1); /* Dark & transparent */
+    color: white;
     width: 300px;
+    transition: background-color 0.3s;
+}
+
+.search-bar::placeholder {
+    color: rgba(255, 255, 255, 0.6); /* Light placeholder text */
 }
 
 .search-button {
-    padding: 10px 15px;
+    padding: 10px 20px;
+    margin-left: 10px;
     border: none;
-    border-radius: 0 20px 20px 0;
-    background-color: #ff4081;
-    color: #ffffff;
+    border-radius: 25px;
+    background-color: #007bff; /* Button color */
+    color: white;
     cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover {
+    background-color: #0056b3; /* Darker button on hover */
+}
+
+.settings-container {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.settings-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #1a1a1a; /* Dark background for dropdown */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s;
+}
+
+.dropdown-menu.show {
+    display: block; /* Show dropdown when toggled */
+}
+
+.dropdown-item {
+    padding: 10px;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Highlight on hover */
 }
 
 .comics-section {
-    padding: 20px;
     margin: 20px;
-    background-color: #1e1e1e;
-    border-radius: 20px;
 }
 
 .comics {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .comic-card {
-    background-color: #333333;
-    padding: 10px;
+    background-color: #1e1e1e; /* Card background */
     border-radius: 10px;
+    padding: 10px;
+    width: 150px; /* Fixed width for cards */
     text-align: center;
-    transition: background-color 0.3s;
 }
 
 .comic-card img {
     width: 100%;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
-.comic-card:hover {
-    background-color: #444444;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Light theme styles */
+.light-theme {
+    background-color: #ffffff; /* Light background */
+    color: #000000; /* Dark text */
+}
+
+.light-theme .search-bar {
+    background-color: rgba(0, 0, 0, 0.1); /* Light & transparent */
+}
+
+.light-theme .comic-card {
+    background-color: #f0f0f0; /* Card background for light theme */
+}
+
+.light-theme .dropdown-menu {
+    background-color: #f0f0f0; /* Dropdown background for light theme */
+}
+
+.light-theme .dropdown-item:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Dark highlight on hover */
 }
