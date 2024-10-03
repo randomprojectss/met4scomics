@@ -7,9 +7,58 @@ body {
     font-size: 18px; /* Increased text size */
 }
 
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #1a1a1a; /* Dark header */
+}
+
 h1 {
-    text-align: center;
     font-size: 2.5rem; /* Increased title size */
+    margin: 0;
+}
+
+.settings-container {
+    position: relative;
+}
+
+.settings-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #1a1a1a; /* Dark background for dropdown */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-menu.show {
+    display: block; /* Show dropdown when toggled */
+}
+
+.dropdown-item {
+    padding: 10px;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    font-size: 18px; /* Increased dropdown item text size */
+}
+
+.dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Highlight on hover */
 }
 
 .search-container {
@@ -55,50 +104,6 @@ h1 {
     background-color: #0056b3; /* Darker button on hover */
 }
 
-.settings-container {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-}
-
-.settings-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 0;
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: #1a1a1a; /* Dark background for dropdown */
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 0.3s;
-}
-
-.dropdown-menu.show {
-    display: block; /* Show dropdown when toggled */
-}
-
-.dropdown-item {
-    padding: 10px;
-    color: white;
-    background: none;
-    border: none;
-    cursor: pointer;
-    text-align: left;
-    width: 100%;
-    font-size: 18px; /* Increased dropdown item text size */
-}
-
-.dropdown-item:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Highlight on hover */
-}
-
 .comics-section {
     margin: 20px;
 }
@@ -107,6 +112,7 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: center; /* Centering the comics section */
 }
 
 .comic-card {
@@ -115,6 +121,11 @@ h1 {
     padding: 10px;
     width: 150px; /* Fixed width for cards */
     text-align: center;
+    transition: transform 0.3s; /* Animation on hover */
+}
+
+.comic-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
 }
 
 .comic-card img {
@@ -170,11 +181,11 @@ h1 {
 }
 
 input:checked + .slider {
-    background-color: #2196F3; /* Active switch color */
+    background-color: #2196F3;
 }
 
 input:checked + .slider:before {
-    transform: translateX(26px); /* Move knob to the right */
+    transform: translateX(26px);
 }
 
 /* Light theme styles */
