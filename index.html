@@ -14,14 +14,15 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-end; /* Align items to the right */
             justify-content: center;
+            padding-right: 20px; /* Add some padding to the right */
         }
 
         /* Gray underline at the top */
         .underline {
             width: 100%;
-            height: 2px; /* Height of the underline */
+            height: 4px; /* Increased height of the underline */
             background-color: #ccc; /* Gray color */
             margin-bottom: 20px; /* Space between underline and button */
         }
@@ -32,7 +33,7 @@
             padding: 8px 20px; /* Wider padding */
             margin: 10px;
             background-color: transparent; /* Transparent background */
-            color: #373D47;
+            color: white; /* White text */
             font-weight: 500;
             opacity: 1;
             transition: 0.3s;
@@ -41,7 +42,7 @@
 
         .customButton:hover {
             background-color: rgba(249, 249, 249, 0.3); /* Slight background on hover */
-            color: #000000;
+            color: #000000; /* Change text color on hover */
         }
         
         .html_button {
