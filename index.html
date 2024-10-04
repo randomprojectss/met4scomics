@@ -60,18 +60,7 @@
             background-color: rgba(50, 50, 50, 0.9); /* Dark background with transparency */
             border-radius: 10px; /* Rounded corners */
             padding: 20px; /* Padding inside the comment box */
-        }
-
-        #commentBox {
-            width: 100%; /* Full width */
-            height: 70px; /* Height of the comment box (smaller) */
-            margin-bottom: 15px; /* Space below the comment box */
-            border-radius: 5px; /* Rounded corners */
-            border: 1px solid #ccc; /* Border style */
-            resize: none; /* Prevent resizing */
-            background-color: rgba(100, 100, 100, 0.8); /* Dark background for comment input */
-            color: white; /* Text color */
-            padding: 10px; /* Padding for input text */
+            flex-direction: column; /* Stack elements vertically */
         }
 
         #output {
@@ -80,10 +69,23 @@
             background-color: rgba(249, 249, 249, 0.1); /* Transparent background for output */
             border-radius: 5px; /* Rounded corners */
             color: white; /* Text color */
-            height: 200px; /* Set a height for the output area */
+            height: 300px; /* Set a height for the output area (very large) */
             overflow-y: auto; /* Enable vertical scroll if needed */
             margin-bottom: 15px; /* Space below the output area */
             flex: 1; /* Take up remaining space */
+            width: 100%; /* Make it full width */
+        }
+
+        #commentBox {
+            width: 100%; /* Full width */
+            height: 50px; /* Height of the comment box (smaller) */
+            margin-bottom: 15px; /* Space below the comment box */
+            border-radius: 5px; /* Rounded corners */
+            border: 1px solid #ccc; /* Border style */
+            resize: none; /* Prevent resizing */
+            background-color: rgba(100, 100, 100, 0.8); /* Dark background for comment input */
+            color: white; /* Text color */
+            padding: 10px; /* Padding for input text */
         }
 
         .vertical-line {
@@ -102,9 +104,8 @@
     <div class="underline"></div> <!-- Gray underline -->
 
     <div class="comment-container">
-        <textarea id="commentBox" placeholder="Write your comment here..."></textarea>
-        <div class="vertical-line"></div> <!-- Vertical line -->
         <div id="output">Your comments will appear here...</div>
+        <textarea id="commentBox" placeholder="Write your comment here..."></textarea>
     </div>
 
     <script>
