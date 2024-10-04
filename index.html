@@ -30,113 +30,88 @@
         .customButton { 
             border: 1.5px solid #000000;
             border-radius: 13px;
-            padding: 15px 30px; /* Increased padding for larger buttons */
+            padding: 10px 20px; /* Smaller padding for the login button */
             margin: 15px; /* Margin for spacing */
-            background-color: transparent; /* Transparent background */
-            color: #F9F9F9; /* White text color */
+            background-color: #F9F9F9; /* Non-transparent background */
+            color: #000000; /* Text color */
             font-weight: normal;
             opacity: 1;
             transition: 1s;
-            cursor: pointer; /* Change cursor on hover */
-            text-decoration: none; /* Remove underline from link */
-        } 
+        }
 
         .customButton:hover {
-            background-color: rgba(255, 255, 255, 0.1); /* Slight change on hover */
+            cursor: pointer;
+            background-color: #F9F9F9;
             opacity: 0.5;
-            transition: 1s;
-            color: #FFFFFF; /* White text color on hover */
+            color: #000000;
         }
 
-        .comment-container {
-            display: flex; /* Use flexbox for layout */
-            flex-direction: column; /* Stack elements vertically */
-            position: absolute; /* Position it relative to the parent */
-            bottom: 70px; /* Distance from the bottom */
-            left: 20px; /* Distance from the left */
-            width: 600px; /* Set a fixed width */
-            max-height: 300px; /* Set a maximum height */
-            overflow-y: auto; /* Enable vertical scrolling */
-            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+        /* Comment box styles */
+        .comment-box {
+            width: 400px; /* Fixed width for the comment box */
+            max-height: 300px; /* Max height for scrolling */
+            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+            border: 1px solid black; /* Border for the comment box */
             border-radius: 10px; /* Rounded corners */
-            padding: 10px; /* Inner padding */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow effect */
+            overflow-y: auto; /* Enable scrolling */
+            padding: 10px; /* Padding inside the comment box */
+            margin-bottom: 10px; /* Margin below the comment box */
         }
 
-        .input-container {
-            position: absolute; /* Positioning below the comments */
-            bottom: 10px; /* Distance from the bottom */
-            left: 20px; /* Distance from the left */
-            width: 600px; /* Same width as comment-container */
-        }
-
-        input[type="text"] {
-            width: 100%; /* Make it full width */
-            padding: 10px; /* Padding for the input */
+        /* Input field for comments */
+        .input-comment {
+            width: 400px; /* Fixed width for the input */
+            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+            border: 1px solid black; /* Border for the input */
             border-radius: 10px; /* Rounded corners */
-            border: 1px solid #ccc; /* Border styling */
-            background-color: rgba(255, 255, 255, 0.2); /* Darker transparent background */
-            color: #FFFFFF; /* White text color */
+            padding: 10px; /* Padding inside the input */
+            color: #000000; /* Text color */
         }
     </style>
 </head>
 <body>
-    <div class="html_button btn-left login-on-off">
-        <input name="toggle-example" id="toggle-example" type="checkbox" style="display:none;">
-        <label class="btn customButton large icon-after login-toggle" for="toggle-example">Login</label>
+
+    <div class="html_button btn-left">
+        <label class="btn customButton large" for="toggle-example">Login</label>
     </div>
+
     <div class="underline"></div>
 
-    <div class="comment-container" id="output"></div>
-
-    <div class="input-container">
-        <input type="text" id="commentInput" placeholder="Write your comment..." />
+    <div class="comment-box" id="commentBox">
+        <p id="commentsList"></p> <!-- Display comments here -->
     </div>
 
+    <input type="text" class="input-comment" id="commentInput" placeholder="Write a comment..." onkeypress="submitComment(event)">
+
     <script>
-        let visitorCount = 1; // To keep track of visitors
-        const output = document.getElementById('output');
+        let username = "Visitor"; // Static username for all users
+        let comments = [];
 
-        // Function to load comments
-        function loadComments() {
-            let comments = JSON.parse(localStorage.getItem('comments')) || [];
-            output.innerHTML = ''; // Clear the output
-            comments.forEach(comment => {
-                const newComment = document.createElement('div');
-                newComment.textContent = comment; // Set the comment text
-                output.appendChild(newComment); // Add the comment to the output
-            });
-            output.scrollTop = output.scrollHeight; // Scroll to the bottom
-        }
+        function submitComment(event) {
+            if (event.key === 'Enter') {
+                const commentInput = document.getElementById('commentInput');
+                const commentText = commentInput.value.trim();
 
-        // Load existing comments initially
-        loadComments();
-
-        // Function to submit a comment
-        document.getElementById('commentInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const comment = `Visitor ${visitorCount}: ${this.value}`;
-                if (this.value.trim() !== '') {
-                    // Save comment to local storage
-                    let comments = JSON.parse(localStorage.getItem('comments')) || [];
-                    comments.push(comment);
-                    localStorage.setItem('comments', JSON.stringify(comments));
-                    this.value = ''; // Clear the input
-                    visitorCount++; // Increment visitor count
-                    loadComments(); // Reload comments
+                if (commentText) {
+                    comments.push(`${username}: ${commentText}`);
+                    commentInput.value = ''; // Clear the input
+                    updateComments(); // Update the displayed comments
                 }
             }
-        });
+        }
 
-        // Clear comments every 2 minutes
+        function updateComments() {
+            const commentsList = document.getElementById('commentsList');
+            commentsList.innerHTML = comments.join('<br>'); // Join comments with line breaks
+            commentsList.scrollTop = commentsList.scrollHeight; // Scroll to the bottom
+        }
+
+        // Automatically clear comments every 2 minutes
         setInterval(() => {
-            localStorage.removeItem('comments'); // Clear comments from local storage
-            output.innerHTML = ''; // Clear comments from the displayed output
-            visitorCount = 1; // Reset visitor count
-        }, 120000); // 120000 milliseconds = 2 minutes
-
-        // Load comments periodically
-        setInterval(loadComments, 2000); // Load comments every 2 seconds
+            comments = [];
+            updateComments();
+        }, 120000); // 2 minutes in milliseconds
     </script>
+
 </body>
 </html>
