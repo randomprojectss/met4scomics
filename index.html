@@ -3,161 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Met4Comics - Anime</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1f1f1f;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            text-align: center;
-            padding: 20px;
-            background-color: #333;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 3rem;
-        }
-
-        .anime-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .anime-card {
-            background-color: #2a2a2a;
-            padding: 15px;
-            border-radius: 8px;
-            transition: transform 0.3s;
-            text-align: center;
-        }
-
-        .anime-card:hover {
-            transform: scale(1.05);
-        }
-
-        .anime-card img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        .anime-title {
-            font-size: 1.2rem;
-            margin-top: 10px;
-        }
-
-        .anime-link {
-            color: #76c7c0;
-            text-decoration: none;
-            font-size: 1rem;
-        }
-
-        .anime-link:hover {
-            text-decoration: underline;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #333;
-        }
-
-        .error {
-            color: red;
-            text-align: center;
-            margin: 20px;
-        }
-    </style>
+    <title>Sign In</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
-    <header>
-        <h1>Met4Comics - Anime</h1>
-    </header>
 
-    <div id="anime-container" class="anime-grid"></div>
-    <div id="error-message" class="error"></div>
+<div class="login-container">
+    <h1>Sign In</h1>
+    <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+         data-text="continue_with" data-size="large" data-logo_alignment="left"></div>
+</div>
 
-    <footer>
-        <p>© 2024 Met4Comics. All rights reserved.</p>
-    </footer>
-
-    <script>
-        const apiUrl = 'https://graphql.anilist.co'; // AniList GraphQL endpoint
-
-        // Function to fetch and display anime
-        async function fetchAnime() {
-            const errorMessageEl = document.getElementById('error-message');
-            errorMessageEl.textContent = ''; // Clear any previous error messages
-
-            const query = `
-            {
-                Page {
-                    media {
-                        title {
-                            romaji
-                            english
-                        }
-                        coverImage {
-                            medium
-                        }
-                        siteUrl
-                    }
-                }
-            }`;
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ query }),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch from the API.');
-                }
-
-                const { data } = await response.json();
-
-                if (data.Page.media.length === 0) {
-                    throw new Error('No anime found');
-                }
-
-                const animeContainer = document.getElementById('anime-container');
-                animeContainer.innerHTML = ''; // Clear the container
-
-                data.Page.media.forEach(anime => {
-                    const title = anime.title.romaji || anime.title.english;
-                    const coverUrl = anime.coverImage.medium;
-                    const animeLink = anime.siteUrl;
-
-                    const animeCard = document.createElement('div');
-                    animeCard.classList.add('anime-card');
-
-                    const img = document.createElement('img');
-                    img.src = coverUrl;
-
-                    const titleEl = document.createElement('div');
-                    titleEl.classList.add('anime-title');
-                    titleEl.innerText = title;
-
-                    const linkEl = document.createElement('a');
-                    linkEl.href = animeLink; // Direct link to the anime
-                    linkEl.classList.add('anime-link');
-                    linkEl.innerText = 'Watch Now';
-                    linkEl.target = '_blank'; // Open in new tab
-
-                    animeCard.appendChild(img);
-                    animeCard.appendChild(titleEl);
-                    animeCard.appendChild(linkEl);
-
-                    animeContainer.app
+<script>
+    function onSignIn(googleUser) {
+        const profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId());
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail());
+        
+        // Redirect or do something with user data
+    }
+</script>
+</body>
+</html>
