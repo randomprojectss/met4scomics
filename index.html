@@ -51,10 +51,12 @@
         }
 
         .comment-container {
+            display: flex; /* Use flexbox for layout */
+            align-items: flex-start; /* Align items at the top */
             position: absolute; /* Position it relative to the parent */
             bottom: 20px; /* Distance from the bottom */
             left: 20px; /* Distance from the left */
-            width: 400px; /* Set a wider width for the comment box */
+            width: 600px; /* Set a wider width for the comment box */
             background-color: rgba(50, 50, 50, 0.9); /* Dark background with transparency */
             border-radius: 10px; /* Rounded corners */
             padding: 20px; /* Padding inside the comment box */
@@ -81,6 +83,14 @@
             height: 200px; /* Set a height for the output area */
             overflow-y: auto; /* Enable vertical scroll if needed */
             margin-bottom: 15px; /* Space below the output area */
+            flex: 1; /* Take up remaining space */
+        }
+
+        .vertical-line {
+            width: 2px; /* Width of the vertical line */
+            background-color: rgba(204, 204, 204, 0.5); /* Slightly transparent gray */
+            margin: 0 15px; /* Margin to separate from the comment box */
+            height: 100%; /* Full height of the container */
         }
     </style>
 </head>
@@ -92,8 +102,9 @@
     <div class="underline"></div> <!-- Gray underline -->
 
     <div class="comment-container">
-        <div id="output">Your comments will appear here...</div>
         <textarea id="commentBox" placeholder="Write your comment here..."></textarea>
+        <div class="vertical-line"></div> <!-- Vertical line -->
+        <div id="output">Your comments will appear here...</div>
     </div>
 
     <script>
@@ -111,7 +122,27 @@
                 output.appendChild(newComment); // Add the comment to the output
                 commentBox.value = ''; // Clear the comment box
                 output.scrollTop = output.scrollHeight; // Scroll to the bottom
+
+                // Save comment to local storage
+                saveComment(newComment.textContent);
             }
+        }
+
+        // Function to save comment to local storage
+        function saveComment(comment) {
+            let comments = JSON.parse(localStorage.getItem('comments')) || [];
+            comments.push(comment);
+            localStorage.setItem('comments', JSON.stringify(comments));
+        }
+
+        // Load comments from local storage
+        function loadComments() {
+            let comments = JSON.parse(localStorage.getItem('comments')) || [];
+            comments.forEach(comment => {
+                const newComment = document.createElement('div');
+                newComment.textContent = comment; // Set the comment text
+                output.appendChild(newComment); // Add the comment to the output
+            });
         }
 
         // Add event listener for Enter key
@@ -121,6 +152,9 @@
                 submitComment(); // Call the submit comment function
             }
         });
+
+        // Load comments on page load
+        loadComments();
     </script>
 </body>
 </html>
