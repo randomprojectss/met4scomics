@@ -90,15 +90,20 @@
     </footer>
 
     <script>
-        const apiUrl = 'https://api.jikan.moe/v4/manga'; // Jikan API URL
+        const apiUrl = 'https://api.mangadex.org/manga?includes[]=cover_art&limit=10'; // MangaDex API URL
 
-        // Function to fetch and display manga
+        // Function to fetch and display manhwa
         async function fetchManhwas() {
             const errorMessageEl = document.getElementById('error-message');
             errorMessageEl.textContent = ''; // Clear any previous error messages
 
             try {
-                const response = await fetch(apiUrl);
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
                 
                 // Check if response is OK
                 if (!response.ok) {
@@ -119,9 +124,9 @@
                 mangaContainer.innerHTML = ''; // Clear the container
 
                 data.data.forEach(manga => {
-                    const title = manga.title || 'No Title';
-                    const coverUrl = manga.images?.jpg?.large_image_url || 'https://via.placeholder.com/200'; // Fallback image
-                    const mangaLink = manga.url;
+                    const title = manga.attributes.title.en || 'No Title';
+                    const coverUrl = manga.attributes.coverArt ? `https://uploads.mangadex.org/covers/${manga.id}/${manga.attributes.coverArt}` : 'https://via.placeholder.com/200'; // Fallback image
+                    const mangaLink = `https://mangadex.org/title/${manga.id}`;
 
                     const mangaCard = document.createElement('div');
                     mangaCard.classList.add('manga-card');
