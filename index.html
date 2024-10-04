@@ -69,6 +69,12 @@
             padding: 20px;
             background-color: #333;
         }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin: 20px;
+        }
     </style>
 </head>
 <body>
@@ -77,6 +83,7 @@
     </header>
 
     <div id="manga-container" class="manga-grid"></div>
+    <div id="error-message" class="error"></div>
 
     <footer>
         <p>© 2024 Met4Comics. All rights reserved.</p>
@@ -87,38 +94,61 @@
 
         // Function to fetch and display manga
         async function fetchManhwas() {
-            const response = await fetch(apiUrl);
-            const data = await response.json();
+            const errorMessageEl = document.getElementById('error-message');
+            errorMessageEl.textContent = ''; // Clear any previous error messages
 
-            const mangaContainer = document.getElementById('manga-container');
-            mangaContainer.innerHTML = ''; // Clear the container
+            try {
+                const response = await fetch(apiUrl);
+                
+                // Check if response is OK
+                if (!response.ok) {
+                    throw new Error('API request failed with status ' + response.status);
+                }
 
-            data.data.forEach(manga => {
-                const title = manga.attributes.title.en || 'No Title';
-                const coverUrl = manga.relationships.find(rel => rel.type === 'cover_art')?.attributes?.fileName;
-                const mangaLink = `https://mangadex.org/title/${manga.id}`;
+                const data = await response.json();
+                
+                // Log response to the console for debugging
+                console.log('API Response:', data);
 
-                const mangaCard = document.createElement('div');
-                mangaCard.classList.add('manga-card');
+                // Check if data is valid
+                if (!data || !data.data) {
+                    throw new Error('Invalid data format from API');
+                }
 
-                const img = document.createElement('img');
-                img.src = `https://uploads.mangadex.org/covers/${manga.id}/${coverUrl}` || 'https://via.placeholder.com/200'; // Manga cover image or placeholder
+                const mangaContainer = document.getElementById('manga-container');
+                mangaContainer.innerHTML = ''; // Clear the container
 
-                const titleEl = document.createElement('div');
-                titleEl.classList.add('manga-title');
-                titleEl.innerText = title;
+                data.data.forEach(manga => {
+                    const title = manga.attributes.title.en || 'No Title';
+                    const coverUrl = manga.relationships.find(rel => rel.type === 'cover_art')?.attributes?.fileName;
+                    const mangaLink = `https://mangadex.org/title/${manga.id}`;
 
-                const linkEl = document.createElement('a');
-                linkEl.href = mangaLink;
-                linkEl.classList.add('manga-link');
-                linkEl.innerText = 'Read Now';
+                    const mangaCard = document.createElement('div');
+                    mangaCard.classList.add('manga-card');
 
-                mangaCard.appendChild(img);
-                mangaCard.appendChild(titleEl);
-                mangaCard.appendChild(linkEl);
+                    const img = document.createElement('img');
+                    img.src = coverUrl ? `https://uploads.mangadex.org/covers/${manga.id}/${coverUrl}` : 'https://via.placeholder.com/200'; // Manga cover image or placeholder
 
-                mangaContainer.appendChild(mangaCard);
-            });
+                    const titleEl = document.createElement('div');
+                    titleEl.classList.add('manga-title');
+                    titleEl.innerText = title;
+
+                    const linkEl = document.createElement('a');
+                    linkEl.href = mangaLink;
+                    linkEl.classList.add('manga-link');
+                    linkEl.innerText = 'Read Now';
+
+                    mangaCard.appendChild(img);
+                    mangaCard.appendChild(titleEl);
+                    mangaCard.appendChild(linkEl);
+
+                    mangaContainer.appendChild(mangaCard);
+                });
+            } catch (error) {
+                // Display error message
+                errorMessageEl.textContent = `Error: ${error.message}`;
+                console.error('Error fetching mangas:', error);
+            }
         }
 
         // Call the function to fetch and display manhwas
