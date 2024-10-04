@@ -3,157 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Met4Comics</title>
+    <title>Met4Comics - Manhwas</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
+            background-color: #1f1f1f;
+            color: #fff;
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #4a90e2, #9013fe); /* Gradient background */
-            color: #FFFFFF;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Center items */
-            justify-content: flex-start; /* Align items to the top */
-            padding: 20px; /* Add some padding */
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Subtle text shadow */
         }
 
-        /* Gray underline at the top */
-        .underline {
-            width: 100%; /* Full width of the container */
-            height: 5px; /* Thicker height for the underline */
-            background-color: rgba(255, 255, 255, 0.3); /* Slightly transparent white */
-            margin-top: 20px; /* Space above the underline */
-            border-radius: 10px; /* Rounded corners */
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
         }
 
-        .customButton { 
-            border: 2px solid #FFFFFF; /* White border */
-            border-radius: 20px; /* Rounded corners */
-            padding: 15px 30px; /* Padding for buttons */
-            margin: 15px; /* Margin for spacing */
-            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white background */
-            color: #FFFFFF; /* White text color */
-            font-size: 18px; /* Increased font size */
-            font-weight: bold; /* Bold text */
-            transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
-            cursor: pointer; /* Change cursor on hover */
-            text-decoration: none; /* Remove underline from link */
-        } 
-
-        .customButton:hover {
-            background-color: rgba(255, 255, 255, 0.3); /* Change background color on hover */
-            transform: scale(1.05); /* Slightly enlarge on hover */
+        h1 {
+            margin: 0;
+            font-size: 3rem;
         }
 
-        .comment-container {
-            display: flex; /* Use flexbox for layout */
-            flex-direction: column; /* Stack elements vertically */
-            position: relative; /* Position relative to parent */
-            bottom: 70px; /* Distance from the bottom */
-            width: 100%; /* Full width */
-            max-height: 300px; /* Maximum height */
-            overflow-y: auto; /* Enable vertical scrolling */
-            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
-            border-radius: 10px; /* Rounded corners */
-            padding: 10px; /* Inner padding */
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Shadow effect */
-            backdrop-filter: blur(10px); /* Blurring effect */
-            margin-top: 20px; /* Space above comment container */
+        .manga-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
         }
 
-        .input-container {
-            position: relative; /* Positioning below the comments */
-            width: 100%; /* Full width */
-            margin-top: 10px; /* Space above input */
+        .manga-card {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            transition: transform 0.3s;
+            text-align: center;
         }
 
-        input[type="text"] {
-            width: 100%; /* Make it full width */
-            padding: 10px; /* Padding for the input */
-            border-radius: 20px; /* Rounded corners */
-            border: 1px solid #ccc; /* Border styling */
-            background-color: rgba(255, 255, 255, 0.3); /* Slightly transparent background */
-            color: #000000; /* Text color */
-            font-size: 16px; /* Increased font size */
+        .manga-card:hover {
+            transform: scale(1.05);
         }
 
-        input[type="text"]:focus {
-            outline: none; /* Remove outline on focus */
-            border-color: #4a90e2; /* Change border color on focus */
+        .manga-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .manga-title {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .manga-link {
+            color: #76c7c0;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .manga-link:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
         }
     </style>
 </head>
 <body>
-    <div class="html_button btn-left login-on-off">
-        <input name="toggle-example" id="toggle-example" type="checkbox" style="display:none;">
-        <label class="btn customButton large icon-after login-toggle" for="toggle-example">Login</label>
-    </div>
-    <div class="underline"></div>
+    <header>
+        <h1>Met4Comics - Manhwas</h1>
+    </header>
 
-    <div class="comment-container" id="output"></div>
+    <div id="manga-container" class="manga-grid"></div>
 
-    <div class="input-container">
-        <input type="text" id="commentInput" placeholder="Write your comment..." />
-    </div>
+    <footer>
+        <p>© 2024 Met4Comics. All rights reserved.</p>
+    </footer>
 
     <script>
-        const output = document.getElementById('output');
+        const apiUrl = 'https://api.mangadex.org/manga?includes[]=cover_art&limit=10'; // API URL with parameters
 
-        // Generate a unique user ID for the session
-        const userID = localStorage.getItem('userID') || Date.now().toString();
-        localStorage.setItem('userID', userID);
+        // Function to fetch and display manga
+        async function fetchManhwas() {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
 
-        // Function to load comments
-        function loadComments() {
-            let comments = JSON.parse(localStorage.getItem('comments')) || [];
-            output.innerHTML = ''; // Clear the output
-            comments.forEach((comment) => {
-                const newComment = document.createElement('div');
-                newComment.textContent = comment; // Set the comment text
-                newComment.style.marginBottom = '10px'; // Space between comments
-                newComment.style.padding = '8px'; // Padding for comments
-                newComment.style.borderRadius = '10px'; // Rounded corners
-                newComment.style.backgroundColor = 'rgba(255, 255, 255, 0.2)'; // Light background for comments
-                output.appendChild(newComment); // Add the comment to the output
+            const mangaContainer = document.getElementById('manga-container');
+            mangaContainer.innerHTML = ''; // Clear the container
+
+            data.data.forEach(manga => {
+                const title = manga.attributes.title.en || 'No Title';
+                const coverUrl = manga.relationships.find(rel => rel.type === 'cover_art')?.attributes?.fileName;
+                const mangaLink = `https://mangadex.org/title/${manga.id}`;
+
+                const mangaCard = document.createElement('div');
+                mangaCard.classList.add('manga-card');
+
+                const img = document.createElement('img');
+                img.src = `https://uploads.mangadex.org/covers/${manga.id}/${coverUrl}` || 'https://via.placeholder.com/200'; // Manga cover image or placeholder
+
+                const titleEl = document.createElement('div');
+                titleEl.classList.add('manga-title');
+                titleEl.innerText = title;
+
+                const linkEl = document.createElement('a');
+                linkEl.href = mangaLink;
+                linkEl.classList.add('manga-link');
+                linkEl.innerText = 'Read Now';
+
+                mangaCard.appendChild(img);
+                mangaCard.appendChild(titleEl);
+                mangaCard.appendChild(linkEl);
+
+                mangaContainer.appendChild(mangaCard);
             });
-            output.scrollTop = output.scrollHeight; // Scroll to the bottom
         }
 
-        // Load existing comments initially
-        loadComments();
-
-        // Visitor count tracking
-        let visitorCount = parseInt(localStorage.getItem('visitorCount')) || 0;
-
-        // Function to submit a comment
-        document.getElementById('commentInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const comment = `Visitor ${visitorCount + 1}: ${this.value}`;
-                if (this.value.trim() !== '') {
-                    // Save comment to local storage
-                    let comments = JSON.parse(localStorage.getItem('comments')) || [];
-                    comments.push(comment);
-                    localStorage.setItem('comments', JSON.stringify(comments));
-                    this.value = ''; // Clear the input
-                    visitorCount++; // Increment visitor count
-                    localStorage.setItem('visitorCount', visitorCount); // Update visitor count in local storage
-                    loadComments(); // Reload comments
-                }
-            }
-        });
-
-        // Clear comments every 2 minutes
-        setInterval(() => {
-            localStorage.removeItem('comments'); // Clear comments from local storage
-            output.innerHTML = ''; // Clear comments from the displayed output
-            localStorage.setItem('visitorCount', 0); // Reset visitor count
-        }, 120000); // 120000 milliseconds = 2 minutes
-
-        // Load comments periodically
-        setInterval(loadComments, 2000); // Load comments every 2 seconds
+        // Call the function to fetch and display manhwas
+        fetchManhwas();
     </script>
 </body>
 </html>
