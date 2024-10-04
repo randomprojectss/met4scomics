@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Met4Comics</title>
+    <title>Comic Replica</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <div class="logo">Met4Comics</div>
+        <div class="logo">Comick.io</div>
         <nav>
             <ul>
                 <li>Categories</li>
@@ -16,26 +16,54 @@
                 <li>My List</li>
             </ul>
         </nav>
-    </header>
-    <main>
-        <section class="following">
-            <h2>Following</h2>
-            <!-- Comic cards go here -->
-        </section>
-        <section class="reading-history">
-            <h2>Reading History</h2>
-            <!-- Reading history cards go here -->
-        </section>
-        <section class="most-recent-popular">
-            <h2>Most Recent Popular</h2>
-            <!-- Popular comics cards go here -->
-        </section>
-    </main>
-    <aside>
-        <div class="recently-added">
-            <h2>Recently Added / Complete Series</h2>
-            <!-- Recently added comics go here -->
+        <div class="user-profile">
+            <img src="user-avatar.png" alt="User Avatar" class="avatar">
         </div>
-    </aside>
+    </header>
+
+    <main>
+        <section class="main-content">
+            <div class="following">
+                <h2>Following</h2>
+                <!-- Comic Cards -->
+                <div class="comic-cards">
+                    <!-- Example Card -->
+                    <div class="comic-card">
+                        <img src="comic-cover.jpg" alt="Comic Cover">
+                        <p>Chapter 53<br>6 hours ago</p>
+                    </div>
+                    <!-- Add more cards similarly -->
+                </div>
+            </div>
+
+            <div class="reading-history">
+                <h2>Reading History</h2>
+                <div class="comic-cards">
+                    <!-- Add reading history cards -->
+                </div>
+            </div>
+
+            <div class="most-recent">
+                <h2>Most Recent Popular</h2>
+                <div class="comic-cards">
+                    <!-- Add most recent popular comics -->
+                </div>
+            </div>
+        </section>
+
+        <aside class="sidebar">
+            <h2>Recently Added / Complete Series</h2>
+            <!-- Sidebar content -->
+            <ul>
+                <li>Comic 1 - 12 hours ago</li>
+                <li>Comic 2 - 17 hours ago</li>
+                <!-- Add more sidebar links -->
+            </ul>
+        </aside>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Comic Replica. All rights reserved.</p>
+    </footer>
 </body>
 </html>
