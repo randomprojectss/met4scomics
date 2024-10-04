@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Met4Comics - Manhwas</title>
+    <title>Met4Comics - Anime</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,14 +24,14 @@
             font-size: 3rem;
         }
 
-        .manga-grid {
+        .anime-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
             padding: 20px;
         }
 
-        .manga-card {
+        .anime-card {
             background-color: #2a2a2a;
             padding: 15px;
             border-radius: 8px;
@@ -39,28 +39,28 @@
             text-align: center;
         }
 
-        .manga-card:hover {
+        .anime-card:hover {
             transform: scale(1.05);
         }
 
-        .manga-card img {
+        .anime-card img {
             width: 100%;
             height: auto;
             border-radius: 8px;
         }
 
-        .manga-title {
+        .anime-title {
             font-size: 1.2rem;
             margin-top: 10px;
         }
 
-        .manga-link {
+        .anime-link {
             color: #76c7c0;
             text-decoration: none;
             font-size: 1rem;
         }
 
-        .manga-link:hover {
+        .anime-link:hover {
             text-decoration: underline;
         }
 
@@ -79,10 +79,10 @@
 </head>
 <body>
     <header>
-        <h1>Met4Comics - Manhwas</h1>
+        <h1>Met4Comics - Anime</h1>
     </header>
 
-    <div id="manga-container" class="manga-grid"></div>
+    <div id="anime-container" class="anime-grid"></div>
     <div id="error-message" class="error"></div>
 
     <footer>
@@ -90,63 +90,74 @@
     </footer>
 
     <script>
-        const apiUrl = 'https://api.rawgrocery.com/v1/manga'; // Example API endpoint
+        const apiUrl = 'https://graphql.anilist.co'; // AniList GraphQL endpoint
 
-        // Function to fetch and display manga
-        async function fetchManhwas() {
+        // Function to fetch and display anime
+        async function fetchAnime() {
             const errorMessageEl = document.getElementById('error-message');
             errorMessageEl.textContent = ''; // Clear any previous error messages
 
+            const query = `
+            {
+                Page {
+                    media {
+                        title {
+                            romaji
+                            english
+                        }
+                        coverImage {
+                            medium
+                        }
+                        siteUrl
+                    }
+                }
+            }`;
+
             try {
-                const response = await fetch(apiUrl);
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ query }),
+                });
+
                 if (!response.ok) {
                     throw new Error('Failed to fetch from the API.');
                 }
 
-                const data = await response.json();
+                const { data } = await response.json();
 
-                if (data.mangas.length === 0) {
-                    throw new Error('No manga found');
+                if (data.Page.media.length === 0) {
+                    throw new Error('No anime found');
                 }
 
-                const mangaContainer = document.getElementById('manga-container');
-                mangaContainer.innerHTML = ''; // Clear the container
+                const animeContainer = document.getElementById('anime-container');
+                animeContainer.innerHTML = ''; // Clear the container
 
-                data.mangas.forEach(manga => {
-                    const title = manga.title;
-                    const coverUrl = manga.cover_image; // Adjust based on actual API response
-                    const mangaLink = manga.url; // Adjust based on actual API response
+                data.Page.media.forEach(anime => {
+                    const title = anime.title.romaji || anime.title.english;
+                    const coverUrl = anime.coverImage.medium;
+                    const animeLink = anime.siteUrl;
 
-                    const mangaCard = document.createElement('div');
-                    mangaCard.classList.add('manga-card');
+                    const animeCard = document.createElement('div');
+                    animeCard.classList.add('anime-card');
 
                     const img = document.createElement('img');
                     img.src = coverUrl;
 
                     const titleEl = document.createElement('div');
-                    titleEl.classList.add('manga-title');
+                    titleEl.classList.add('anime-title');
                     titleEl.innerText = title;
 
                     const linkEl = document.createElement('a');
-                    linkEl.href = mangaLink; // Direct link to the manga
-                    linkEl.classList.add('manga-link');
-                    linkEl.innerText = 'Read Chapter 1';
+                    linkEl.href = animeLink; // Direct link to the anime
+                    linkEl.classList.add('anime-link');
+                    linkEl.innerText = 'Watch Now';
                     linkEl.target = '_blank'; // Open in new tab
 
-                    mangaCard.appendChild(img);
-                    mangaCard.appendChild(titleEl);
-                    mangaCard.appendChild(linkEl);
+                    animeCard.appendChild(img);
+                    animeCard.appendChild(titleEl);
+                    animeCard.appendChild(linkEl);
 
-                    mangaContainer.appendChild(mangaCard);
-                });
-            } catch (error) {
-                errorMessageEl.textContent = `Error: ${error.message}`;
-                console.error('Error fetching manhwas:', error);
-            }
-        }
-
-        // Call the function to fetch and display manhwas
-        fetchManhwas();
-    </script>
-</body>
-</html>
+                    animeContainer.app
