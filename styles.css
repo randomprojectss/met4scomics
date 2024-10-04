@@ -1,3 +1,4 @@
+/* Global Styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #1e2d3d;
@@ -10,51 +11,85 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1em;
+    padding: 10px;
     background-color: #263a53;
 }
 
-header .logo {
+.logo {
     font-size: 1.5em;
-    font-weight: bold;
     color: #ffffff;
 }
 
 nav ul {
+    list-style-type: none;
     display: flex;
-    list-style: none;
+    gap: 20px;
 }
 
 nav ul li {
-    margin-right: 1.5em;
     color: #ffffff;
     cursor: pointer;
+}
+
+.user-profile .avatar {
+    width: 40px;
+    border-radius: 50%;
 }
 
 main {
     display: flex;
     justify-content: space-between;
-    padding: 1em;
+    padding: 20px;
 }
 
-section {
-    background-color: #2b3e50;
-    margin: 1em;
-    padding: 1em;
-    border-radius: 8px;
+.main-content {
     width: 70%;
 }
 
-aside {
-    background-color: #2b3e50;
-    padding: 1em;
-    border-radius: 8px;
+.sidebar {
     width: 25%;
+    background-color: #2b3e50;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 h2 {
-    border-bottom: 1px solid #445b73;
-    padding-bottom: 0.5em;
-    margin-bottom: 1em;
     color: #ffffff;
+    border-bottom: 2px solid #445b73;
+    margin-bottom: 10px;
+}
+
+.comic-cards {
+    display: flex;
+    gap: 20px;
+}
+
+.comic-card {
+    background-color: #263a53;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    width: 150px;
+}
+
+.comic-card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+footer {
+    background-color: #263a53;
+    padding: 10px;
+    text-align: center;
+    color: #ffffff;
+}
+
+/* Sidebar Styles */
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 10px 0;
 }
