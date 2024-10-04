@@ -100,6 +100,9 @@
     </div>
     <div class="underline"></div> <!-- Gray underline -->
 
+    <!-- Button to clear all comments -->
+    <button id="clearButton" class="customButton">Clear All Comments</button>
+
     <div class="comment-container">
         <div id="output">Your comments will appear here...</div>
         <textarea id="commentBox" placeholder="Write your comment here..."></textarea>
@@ -149,10 +152,18 @@
             output.scrollTop = output.scrollHeight; // Scroll to the bottom after loading
         }
 
-        // Clear comments every 2 minutes
-        setInterval(() => {
+        // Function to clear all comments
+        function clearAllComments() {
             output.innerHTML = ''; // Clear the output area
             localStorage.removeItem('comments'); // Clear comments from local storage
+        }
+
+        // Add event listener for the clear button
+        document.getElementById('clearButton').addEventListener('click', clearAllComments);
+
+        // Clear comments every 2 minutes
+        setInterval(() => {
+            clearAllComments(); // Clear comments using the clear function
         }, 120000); // 120000 milliseconds = 2 minutes
 
         // Add event listener for Enter key
