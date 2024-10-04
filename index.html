@@ -14,7 +14,7 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Center items horizontally */
+            align-items: flex-end; /* Align items to the right */
             justify-content: flex-start; /* Align items to the top */
             padding: 20px; /* Add some padding */
         }
@@ -46,15 +46,9 @@
             background-color: rgba(249, 249, 249, 0.3); /* Slight background on hover */
             color: #000000; /* Change text color on hover */
         }
-
-        .searchButton {
-            width: 200px; /* Width for the search button */
-            padding: 10px; /* Padding for the search button */
-            margin: 20px 0; /* Margin for spacing */
-        }
         
         .html_button {
-            text-align: center;
+            text-align: right; /* Align the button text to the right */
         }
     </style>
 </head>
@@ -64,8 +58,5 @@
         <label class="btn customButton large icon-after login-toggle" for="toggle-example">Login</label>
     </div>
     <div class="underline"></div> <!-- Gray underline -->
-    <div class="html_button btn-center search-button">
-        <button class="customButton searchButton">Search</button> <!-- Search button -->
-    </div>
 </body>
 </html>
