@@ -90,7 +90,7 @@
     </footer>
 
     <script>
-        const apiUrl = 'https://mangakakalot.com/manga'; // Base URL for MangaKakalot
+        const apiUrl = 'https://api.rawgrocery.com/v1/manga'; // Example API endpoint
 
         // Function to fetch and display manga
         async function fetchManhwas() {
@@ -103,22 +103,19 @@
                     throw new Error('Failed to fetch from the API.');
                 }
 
-                const text = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(text, 'text/html');
-                const mangaElements = doc.querySelectorAll('.manga-item');
+                const data = await response.json();
 
-                if (mangaElements.length === 0) {
+                if (data.mangas.length === 0) {
                     throw new Error('No manga found');
                 }
 
                 const mangaContainer = document.getElementById('manga-container');
                 mangaContainer.innerHTML = ''; // Clear the container
 
-                mangaElements.forEach(manga => {
-                    const title = manga.querySelector('.manga-title a').innerText.trim();
-                    const coverUrl = manga.querySelector('.manga-cover img').src;
-                    const mangaLink = manga.querySelector('.manga-title a').href;
+                data.mangas.forEach(manga => {
+                    const title = manga.title;
+                    const coverUrl = manga.cover_image; // Adjust based on actual API response
+                    const mangaLink = manga.url; // Adjust based on actual API response
 
                     const mangaCard = document.createElement('div');
                     mangaCard.classList.add('manga-card');
@@ -131,7 +128,7 @@
                     titleEl.innerText = title;
 
                     const linkEl = document.createElement('a');
-                    linkEl.href = mangaLink;
+                    linkEl.href = mangaLink; // Direct link to the manga
                     linkEl.classList.add('manga-link');
                     linkEl.innerText = 'Read Chapter 1';
                     linkEl.target = '_blank'; // Open in new tab
