@@ -1,8 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
-
-* {
+/* Ensure body and html cover full height */
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
+    font-family: Arial, sans-serif;
+}
+
+/* Set dark background color */
+body {
+    background-color: #2D3748; /* Dark background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container for centering login button */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Custom button styling */
+.customButton { 
+    border: 2.4px solid #5D717A;
+    border-radius: 10.4px;
+    padding: 6.9px;
+    margin: 10px;
+    background-color: #F9F9F9;
+    color: #373D47;
+    font-weight: 500;
+    opacity: 1;
+    transition: 0.3s;
+}
+
+/* Hover effect for the button */
+.customButton:hover {
+    cursor: pointer;
+    background-color: #F9F9F9;
+    opacity: 0.3;
+    transition: 0.3s;
+    color: #000000;
 }
