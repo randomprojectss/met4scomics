@@ -108,15 +108,20 @@
     <script>
         const commentBox = document.getElementById('commentBox');
         const output = document.getElementById('output');
-        let visitorCount = 0; // Initialize visitor count
+        let visitorNumber = localStorage.getItem('visitorNumber');
+
+        // Assign a unique visitor number if not already set
+        if (!visitorNumber) {
+            visitorNumber = Math.floor(Math.random() * 1000) + 1; // Random visitor number
+            localStorage.setItem('visitorNumber', visitorNumber);
+        }
 
         // Function to submit comment
         function submitComment() {
             const commentText = commentBox.value.trim();
             if (commentText) { // Check if the comment is not empty
-                visitorCount++; // Increment visitor count for each comment
                 const newComment = document.createElement('div');
-                newComment.textContent = `Visitor ${visitorCount}: ${commentText}`; // Format the comment with visitor number
+                newComment.textContent = `Visitor ${visitorNumber}: ${commentText}`; // Use the unique visitor number
                 output.appendChild(newComment); // Add the comment to the output
                 commentBox.value = ''; // Clear the comment box
                 output.scrollTop = output.scrollHeight; // Scroll to the bottom
@@ -143,6 +148,12 @@
             });
             output.scrollTop = output.scrollHeight; // Scroll to the bottom after loading
         }
+
+        // Clear comments every 2 minutes
+        setInterval(() => {
+            output.innerHTML = ''; // Clear the output area
+            localStorage.removeItem('comments'); // Clear comments from local storage
+        }, 120000); // 120000 milliseconds = 2 minutes
 
         // Add event listener for Enter key
         commentBox.addEventListener('keypress', function(event) {
