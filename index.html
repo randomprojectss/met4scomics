@@ -90,24 +90,7 @@
     </footer>
 
     <script>
-        const apiUrl = 'https://graphql.anilist.co'; // AniList API URL
-
-        // GraphQL query to fetch manga
-        const query = `
-            query {
-                Page(perPage: 10) {
-                    media(type: MANGA) {
-                        title {
-                            romaji
-                        }
-                        coverImage {
-                            large
-                        }
-                        siteUrl
-                    }
-                }
-            }
-        `;
+        const apiUrl = 'https://mangakakalot.com/manga'; // Base URL for MangaKakalot
 
         // Function to fetch and display manga
         async function fetchManhwas() {
@@ -115,38 +98,27 @@
             errorMessageEl.textContent = ''; // Clear any previous error messages
 
             try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ query }),
-                });
-
-                // Check if response is OK
+                const response = await fetch(apiUrl);
                 if (!response.ok) {
-                    throw new Error('API request failed with status ' + response.status);
+                    throw new Error('Failed to fetch from the API.');
                 }
 
-                const data = await response.json();
-                
-                // Log response to the console for debugging
-                console.log('API Response:', data);
+                const text = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(text, 'text/html');
+                const mangaElements = doc.querySelectorAll('.manga-item');
 
-                // Check if data is valid
-                const mangaList = data.data.Page.media;
-
-                if (!mangaList || !mangaList.length) {
+                if (mangaElements.length === 0) {
                     throw new Error('No manga found');
                 }
 
                 const mangaContainer = document.getElementById('manga-container');
                 mangaContainer.innerHTML = ''; // Clear the container
 
-                mangaList.forEach(manga => {
-                    const title = manga.title.romaji || 'No Title';
-                    const coverUrl = manga.coverImage.large || 'https://via.placeholder.com/200'; // Fallback image
-                    const mangaLink = manga.siteUrl || '#'; // Set to a placeholder if no link is available
+                mangaElements.forEach(manga => {
+                    const title = manga.querySelector('.manga-title a').innerText.trim();
+                    const coverUrl = manga.querySelector('.manga-cover img').src;
+                    const mangaLink = manga.querySelector('.manga-title a').href;
 
                     const mangaCard = document.createElement('div');
                     mangaCard.classList.add('manga-card');
@@ -161,7 +133,8 @@
                     const linkEl = document.createElement('a');
                     linkEl.href = mangaLink;
                     linkEl.classList.add('manga-link');
-                    linkEl.innerText = 'Read Now';
+                    linkEl.innerText = 'Read Chapter 1';
+                    linkEl.target = '_blank'; // Open in new tab
 
                     mangaCard.appendChild(img);
                     mangaCard.appendChild(titleEl);
@@ -170,7 +143,6 @@
                     mangaContainer.appendChild(mangaCard);
                 });
             } catch (error) {
-                // Display error message
                 errorMessageEl.textContent = `Error: ${error.message}`;
                 console.error('Error fetching manhwas:', error);
             }
