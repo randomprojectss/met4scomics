@@ -14,7 +14,7 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: flex-end; /* Align items to the right */
+            align-items: flex-start; /* Align items to the left */
             justify-content: flex-start; /* Align items to the top */
             padding: 20px; /* Add some padding */
         }
@@ -32,8 +32,8 @@
             border-radius: 13px;
             padding: 10px 20px; /* Smaller padding for the login button */
             margin: 15px; /* Margin for spacing */
-            background-color: #F9F9F9; /* Non-transparent background */
-            color: #000000; /* Text color */
+            background-color: rgba(0, 0, 0, 0.5); /* Dark background with 0.5 transparency */
+            color: #F9F9F9; /* White text color */
             font-weight: normal;
             opacity: 1;
             transition: 1s;
@@ -41,9 +41,9 @@
 
         .customButton:hover {
             cursor: pointer;
-            background-color: #F9F9F9;
-            opacity: 0.5;
-            color: #000000;
+            background-color: rgba(0, 0, 0, 0.7); /* Darker background on hover */
+            opacity: 0.9;
+            color: #F9F9F9;
         }
 
         /* Comment box styles */
@@ -56,16 +56,22 @@
             overflow-y: auto; /* Enable scrolling */
             padding: 10px; /* Padding inside the comment box */
             margin-bottom: 10px; /* Margin below the comment box */
+            position: absolute; /* Positioning for bottom left */
+            bottom: 80px; /* Position above the input box */
+            left: 20px; /* Left margin */
         }
 
         /* Input field for comments */
         .input-comment {
             width: 400px; /* Fixed width for the input */
-            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+            background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent background */
             border: 1px solid black; /* Border for the input */
             border-radius: 10px; /* Rounded corners */
             padding: 10px; /* Padding inside the input */
-            color: #000000; /* Text color */
+            color: #F9F9F9; /* Text color */
+            position: absolute; /* Positioning for bottom left */
+            bottom: 20px; /* Position at the bottom */
+            left: 20px; /* Left margin */
         }
     </style>
 </head>
@@ -106,11 +112,8 @@
             commentsList.scrollTop = commentsList.scrollHeight; // Scroll to the bottom
         }
 
-        // Automatically clear comments every 2 minutes
-        setInterval(() => {
-            comments = [];
-            updateComments();
-        }, 120000); // 2 minutes in milliseconds
+        // Function to keep comments updated in real-time
+        setInterval(updateComments, 100); // Update comments every 100 milliseconds
     </script>
 
 </body>
