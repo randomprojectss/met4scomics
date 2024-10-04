@@ -52,15 +52,12 @@
 
         .comment-container {
             display: flex; /* Use flexbox for layout */
-            align-items: flex-start; /* Align items at the top */
+            flex-direction: column; /* Stack elements vertically */
             position: absolute; /* Position it relative to the parent */
             bottom: 20px; /* Distance from the bottom */
             left: 20px; /* Distance from the left */
             width: 600px; /* Set a wider width for the comment box */
-            background-color: rgba(50, 50, 50, 0.9); /* Dark background with transparency */
-            border-radius: 10px; /* Rounded corners */
             padding: 20px; /* Padding inside the comment box */
-            flex-direction: column; /* Stack elements vertically */
         }
 
         #output {
@@ -69,7 +66,7 @@
             background-color: rgba(249, 249, 249, 0.1); /* Transparent background for output */
             border-radius: 5px; /* Rounded corners */
             color: white; /* Text color */
-            height: 300px; /* Set a height for the output area (very large) */
+            height: 300px; /* Set a fixed height for the output area */
             overflow-y: auto; /* Enable vertical scroll if needed */
             margin-bottom: 15px; /* Space below the output area */
             flex: 1; /* Take up remaining space */
@@ -144,6 +141,7 @@
                 newComment.textContent = comment; // Set the comment text
                 output.appendChild(newComment); // Add the comment to the output
             });
+            output.scrollTop = output.scrollHeight; // Scroll to the bottom after loading
         }
 
         // Add event listener for Enter key
