@@ -1,1 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Player Search</title>
+</head>
+<body>
+    <h1>Roblox Player Search</h1>
+    <input type="text" id="userId" placeholder="Enter Roblox User ID">
+    <input type="text" id="placeId" placeholder="Enter Place ID">
+    <button id="searchButton">Search</button>
+    <div id="results"></div>
+
+    <script>
+        document.getElementById('searchButton').onclick = async () => {
+            const userId = document.getElementById('userId').value;
+            const placeId = document.getElementById('placeId').value;
+
+            try {
+                const response = await fetch('/.netlify/functions/playerSearch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId, placeId }),
+                });
+                const data = await response.json();
+                document.getElementById('results').innerText = JSON.stringify(data);
+            } catch (error) {
+                console.error("Error during fetch:", error);
+                document.getElementById('results').innerText = 'An error occurred while searching.';
+            }
+        };
+    </script>
+</body>
+</html>
 
