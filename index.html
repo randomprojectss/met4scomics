@@ -12,17 +12,39 @@
             background: linear-gradient(135deg, #1d1d1d, #444);
             color: white;
             height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* Underline at the top */
-        .underline {
-            width: 100%;
-            height: 4px;
-            background-color: #ffffff;
+        .customButton { 
+            border: 2.4px solid #5D717A;
+            border-radius: 10.4px;
+            padding: 6.9px;
+            margin: 10px;
+            background-color: #F9F9F9;
+            color: #373D47;
+            font-weight: 500;
+            opacity: 1;
+            transition: 0.3s;
+        } 
+
+        .customButton:hover {
+            cursor: pointer;
+            background-color: #F9F9F9;
+            opacity: 0.3;
+            color: #000000;
+        }
+        
+        .html_button {
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div class="underline"></div>
+    <div class="html_button btn-left login-on-off">
+        <input name="toggle-example" id="toggle-example" type="checkbox" style="display:none;">
+        <label class="btn customButton large icon-after login-toggle" for="toggle-example">Login</label>
+    </div>
 </body>
 </html>
