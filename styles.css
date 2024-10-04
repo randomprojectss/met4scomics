@@ -1,45 +1,26 @@
-/* Ensure body and html cover full height */
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
-
-/* Set dark background color */
+/* styles.css */
 body {
-    background-color: #2D3748; /* Dark background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Container for centering login button */
-.login-container {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin: 0;
 }
 
-/* Custom button styling */
-.customButton { 
-    border: 2.4px solid #5D717A;
-    border-radius: 10.4px;
-    padding: 6.9px;
-    margin: 10px;
-    background-color: #F9F9F9;
-    color: #373D47;
-    font-weight: 500;
-    opacity: 1;
-    transition: 0.3s;
+.login-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-/* Hover effect for the button */
-.customButton:hover {
-    cursor: pointer;
-    background-color: #F9F9F9;
-    opacity: 0.3;
-    transition: 0.3s;
-    color: #000000;
+h1 {
+    margin-bottom: 20px;
+}
+
+.g_id_signin {
+    margin-top: 20px;
 }
