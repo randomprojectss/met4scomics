@@ -24,7 +24,7 @@
             width: 100vw; /* Ensure the underline extends to the full width of the viewport */
             height: 3px; /* Thicker height for the underline */
             background-color: rgba(204, 204, 204, 0.5); /* Slightly transparent gray */
-            margin-top: 30px; /* Space above the underline */
+            margin-top: 10px; /* Space above the underline */
         }
 
         .customButton { 
@@ -71,41 +71,26 @@
         }
 
         input[type="text"] {
-            width: calc(100% - 50px); /* Make it full width minus button width */
+            width: 100%; /* Make it full width */
             padding: 10px; /* Padding for the input */
             border-radius: 10px; /* Rounded corners */
             border: 1px solid #ccc; /* Border styling */
             background-color: rgba(255, 255, 255, 0.3); /* Slightly transparent */
             color: #000000; /* Text color */
         }
-
-        input[type="submit"] {
-            padding: 10px 20px; /* Padding for the button */
-            border-radius: 10px; /* Rounded corners */
-            background-color: #F9F9F9; /* Button color */
-            border: 1px solid #ccc; /* Border styling */
-            color: #000000; /* Text color */
-            cursor: pointer; /* Change cursor on hover */
-            transition: background-color 0.3s; /* Transition effect */
-        }
-
-        input[type="submit"]:hover {
-            background-color: #e0e0e0; /* Slight change on hover */
-        }
     </style>
 </head>
 <body>
-    <div class="underline"></div>
     <div class="html_button btn-left login-on-off">
         <input name="toggle-example" id="toggle-example" type="checkbox" style="display:none;">
         <label class="btn customButton large icon-after login-toggle" for="toggle-example">Login</label>
     </div>
+    <div class="underline"></div>
 
     <div class="comment-container" id="output"></div>
 
     <div class="input-container">
         <input type="text" id="commentInput" placeholder="Write your comment..." />
-        <input type="submit" id="submitComment" value="Send" />
     </div>
 
     <script>
@@ -128,19 +113,20 @@
         loadComments();
 
         // Function to submit a comment
-        document.getElementById('submitComment').onclick = function() {
-            const commentInput = document.getElementById('commentInput');
-            const comment = `Visitor ${visitorCount}: ${commentInput.value}`;
-            if (commentInput.value.trim() !== '') {
-                // Save comment to local storage
-                let comments = JSON.parse(localStorage.getItem('comments')) || [];
-                comments.push(comment);
-                localStorage.setItem('comments', JSON.stringify(comments));
-                commentInput.value = ''; // Clear the input
-                visitorCount++; // Increment visitor count
-                loadComments(); // Reload comments
+        document.getElementById('commentInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const comment = `Visitor ${visitorCount}: ${this.value}`;
+                if (this.value.trim() !== '') {
+                    // Save comment to local storage
+                    let comments = JSON.parse(localStorage.getItem('comments')) || [];
+                    comments.push(comment);
+                    localStorage.setItem('comments', JSON.stringify(comments));
+                    this.value = ''; // Clear the input
+                    visitorCount++; // Increment visitor count
+                    loadComments(); // Reload comments
+                }
             }
-        };
+        });
 
         // Clear comments every 2 minutes
         setInterval(() => {
