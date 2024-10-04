@@ -52,46 +52,33 @@
             resultDiv.innerHTML = "Searching...";
 
             try {
-                // Fetch game info from Roblox API
-                const gameInfoResponse = await fetch(`https://games.roblox.com/v1/games/multiplayer/${placeId}`);
-                const gameInfo = await gameInfoResponse.json();
+                // Call the Netlify function
+                const response = await fetch('/.netlify/functions/playerSearch', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ placeId, userId }),
+                });
 
-                // Display the number of servers and total players
-                const serverCount = gameInfo.players;
-                const totalPlayers = gameInfo.maxPlayers;
-                resultDiv.innerHTML = `Game has ${serverCount} servers and ${totalPlayers} players.<br/>`;
+                const data = await response.json();
 
-                // Check if user is in any server
-                const playerFound = await checkUserInServers(userId, placeId);
-                if (playerFound) {
-                    resultDiv.innerHTML += `Player with ID ${userId} is currently in a server.`;
+                if (response.ok) {
+                    resultDiv.innerHTML = `Game has ${data.servers} servers and ${data.totalPlayers} players.<br/>`;
+                    if (data.playerInServer) {
+                        resultDiv.innerHTML += `Player with ID ${userId} is currently in a server.`;
+                    } else {
+                        resultDiv.innerHTML += `Player with ID ${userId} is not in any server.`;
+                    }
                 } else {
-                    resultDiv.innerHTML += `Player with ID ${userId} is not in any server.`;
+                    resultDiv.innerHTML = "An error occurred while searching.";
                 }
 
             } catch (error) {
-                console.error("Error fetching game data:", error);
+                console.error("Error fetching data:", error);
                 resultDiv.innerHTML = "An error occurred while searching.";
             }
         };
-
-        async function checkUserInServers(userId, placeId) {
-            // Fetch current game servers (this is a simplified version)
-            const serverListResponse = await fetch(`https://games.roblox.com/v1/games/${placeId}/servers/Public?sortOrder=Desc&limit=10`);
-            const serverList = await serverListResponse.json();
-            
-            for (const server of serverList.data) {
-                const playerCount = server.playerCount;
-                if (playerCount > 0) {
-                    const playersInServerResponse = await fetch(`https://games.roblox.com/v1/servers/${server.id}/players`);
-                    const playersInServer = await playersInServerResponse.json();
-                    if (playersInServer.data.some(player => player.userId === parseInt(userId))) {
-                        return true; // Player found in this server
-                    }
-                }
-            }
-            return false; // Player not found in any server
-        }
     </script>
 
 </body>
