@@ -90,7 +90,7 @@
     </footer>
 
     <script>
-        const apiUrl = 'https://api.mangadex.org/manga?includes[]=cover_art&limit=10'; // MangaDex API URL
+        const apiUrl = 'https://manhwa-api.com/api/manga'; // ManhwaScan API URL
 
         // Function to fetch and display manhwa
         async function fetchManhwas() {
@@ -98,12 +98,7 @@
             errorMessageEl.textContent = ''; // Clear any previous error messages
 
             try {
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                });
+                const response = await fetch(apiUrl);
                 
                 // Check if response is OK
                 if (!response.ok) {
@@ -116,17 +111,17 @@
                 console.log('API Response:', data);
 
                 // Check if data is valid
-                if (!data || !data.data) {
+                if (!data || !data.manga) {
                     throw new Error('Invalid data format from API');
                 }
 
                 const mangaContainer = document.getElementById('manga-container');
                 mangaContainer.innerHTML = ''; // Clear the container
 
-                data.data.forEach(manga => {
-                    const title = manga.attributes.title.en || 'No Title';
-                    const coverUrl = manga.attributes.coverArt ? `https://uploads.mangadex.org/covers/${manga.id}/${manga.attributes.coverArt}` : 'https://via.placeholder.com/200'; // Fallback image
-                    const mangaLink = `https://mangadex.org/title/${manga.id}`;
+                data.manga.forEach(manga => {
+                    const title = manga.title || 'No Title';
+                    const coverUrl = manga.cover || 'https://via.placeholder.com/200'; // Fallback image
+                    const mangaLink = manga.link;
 
                     const mangaCard = document.createElement('div');
                     mangaCard.classList.add('manga-card');
@@ -152,7 +147,7 @@
             } catch (error) {
                 // Display error message
                 errorMessageEl.textContent = `Error: ${error.message}`;
-                console.error('Error fetching mangas:', error);
+                console.error('Error fetching manhwas:', error);
             }
         }
 
