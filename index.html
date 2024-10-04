@@ -94,14 +94,17 @@
     </div>
 
     <script>
-        let visitorCount = 1; // To keep track of visitors
         const output = document.getElementById('output');
+
+        // Generate a unique user ID for the session
+        const userID = localStorage.getItem('userID') || Date.now().toString();
+        localStorage.setItem('userID', userID);
 
         // Function to load comments
         function loadComments() {
             let comments = JSON.parse(localStorage.getItem('comments')) || [];
             output.innerHTML = ''; // Clear the output
-            comments.forEach(comment => {
+            comments.forEach((comment, index) => {
                 const newComment = document.createElement('div');
                 newComment.textContent = comment; // Set the comment text
                 output.appendChild(newComment); // Add the comment to the output
@@ -112,10 +115,13 @@
         // Load existing comments initially
         loadComments();
 
+        // Visitor count tracking
+        let visitorCount = parseInt(localStorage.getItem('visitorCount')) || 0;
+
         // Function to submit a comment
         document.getElementById('commentInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                const comment = `Visitor ${visitorCount}: ${this.value}`;
+                const comment = `Visitor ${visitorCount + 1}: ${this.value}`;
                 if (this.value.trim() !== '') {
                     // Save comment to local storage
                     let comments = JSON.parse(localStorage.getItem('comments')) || [];
@@ -123,6 +129,7 @@
                     localStorage.setItem('comments', JSON.stringify(comments));
                     this.value = ''; // Clear the input
                     visitorCount++; // Increment visitor count
+                    localStorage.setItem('visitorCount', visitorCount); // Update visitor count in local storage
                     loadComments(); // Reload comments
                 }
             }
@@ -132,7 +139,7 @@
         setInterval(() => {
             localStorage.removeItem('comments'); // Clear comments from local storage
             output.innerHTML = ''; // Clear comments from the displayed output
-            visitorCount = 1; // Reset visitor count
+            localStorage.setItem('visitorCount', 0); // Reset visitor count
         }, 120000); // 120000 milliseconds = 2 minutes
 
         // Load comments periodically
