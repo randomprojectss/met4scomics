@@ -25,8 +25,6 @@
             height: 3px; /* Thicker height for the underline */
             background-color: rgba(204, 204, 204, 0.5); /* Slightly transparent gray */
             margin-top: 30px; /* Space above the underline */
-            position: relative;
-            left: 0; /* Ensure it starts from the left */
         }
 
         .customButton { 
@@ -54,128 +52,105 @@
             display: flex; /* Use flexbox for layout */
             flex-direction: column; /* Stack elements vertically */
             position: absolute; /* Position it relative to the parent */
-            bottom: 20px; /* Distance from the bottom */
+            bottom: 70px; /* Distance from the bottom */
             left: 20px; /* Distance from the left */
-            width: 600px; /* Set a wider width for the comment box */
-            padding: 20px; /* Padding inside the comment box */
+            width: 600px; /* Set a fixed width */
+            max-height: 300px; /* Set a maximum height */
+            overflow-y: auto; /* Enable vertical scrolling */
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+            border-radius: 10px; /* Rounded corners */
+            padding: 10px; /* Inner padding */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow effect */
         }
 
-        #output {
-            border: 1px solid #000; /* Border for output area */
-            padding: 15px; /* Padding for output area */
-            background-color: rgba(249, 249, 249, 0.1); /* Transparent background for output */
-            border-radius: 5px; /* Rounded corners */
-            color: white; /* Text color */
-            height: 300px; /* Set a fixed height for the output area */
-            overflow-y: auto; /* Enable vertical scroll if needed */
-            margin-bottom: 15px; /* Space below the output area */
-            flex: 1; /* Take up remaining space */
-            width: 100%; /* Make it full width */
+        .input-container {
+            position: absolute; /* Positioning below the comments */
+            bottom: 10px; /* Distance from the bottom */
+            left: 20px; /* Distance from the left */
+            width: 600px; /* Same width as comment-container */
         }
 
-        #commentBox {
-            width: 100%; /* Full width */
-            height: 50px; /* Height of the comment box (smaller) */
-            margin-bottom: 15px; /* Space below the comment box */
-            border-radius: 5px; /* Rounded corners */
-            border: 1px solid #ccc; /* Border style */
-            resize: none; /* Prevent resizing */
-            background-color: rgba(100, 100, 100, 0.8); /* Dark background for comment input */
-            color: white; /* Text color */
-            padding: 10px; /* Padding for input text */
+        input[type="text"] {
+            width: calc(100% - 50px); /* Make it full width minus button width */
+            padding: 10px; /* Padding for the input */
+            border-radius: 10px; /* Rounded corners */
+            border: 1px solid #ccc; /* Border styling */
+            background-color: rgba(255, 255, 255, 0.3); /* Slightly transparent */
+            color: #000000; /* Text color */
         }
 
-        .vertical-line {
-            width: 2px; /* Width of the vertical line */
-            background-color: rgba(204, 204, 204, 0.5); /* Slightly transparent gray */
-            margin: 0 15px; /* Margin to separate from the comment box */
-            height: 100%; /* Full height of the container */
+        input[type="submit"] {
+            padding: 10px 20px; /* Padding for the button */
+            border-radius: 10px; /* Rounded corners */
+            background-color: #F9F9F9; /* Button color */
+            border: 1px solid #ccc; /* Border styling */
+            color: #000000; /* Text color */
+            cursor: pointer; /* Change cursor on hover */
+            transition: background-color 0.3s; /* Transition effect */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #e0e0e0; /* Slight change on hover */
         }
     </style>
 </head>
 <body>
+    <div class="underline"></div>
     <div class="html_button btn-left login-on-off">
         <input name="toggle-example" id="toggle-example" type="checkbox" style="display:none;">
         <label class="btn customButton large icon-after login-toggle" for="toggle-example">Login</label>
     </div>
-    <div class="underline"></div> <!-- Gray underline -->
 
-    <!-- Button to clear all comments -->
-    <button id="clearButton" class="customButton">Clear All Comments</button>
+    <div class="comment-container" id="output"></div>
 
-    <div class="comment-container">
-        <div id="output">Your comments will appear here...</div>
-        <textarea id="commentBox" placeholder="Write your comment here..."></textarea>
+    <div class="input-container">
+        <input type="text" id="commentInput" placeholder="Write your comment..." />
+        <input type="submit" id="submitComment" value="Send" />
     </div>
 
     <script>
-        const commentBox = document.getElementById('commentBox');
+        let visitorCount = 1; // To keep track of visitors
         const output = document.getElementById('output');
-        let visitorNumber = localStorage.getItem('visitorNumber');
 
-        // Assign a unique visitor number if not already set
-        if (!visitorNumber) {
-            visitorNumber = Math.floor(Math.random() * 1000) + 1; // Random visitor number
-            localStorage.setItem('visitorNumber', visitorNumber);
-        }
-
-        // Function to submit comment
-        function submitComment() {
-            const commentText = commentBox.value.trim();
-            if (commentText) { // Check if the comment is not empty
-                const newComment = document.createElement('div');
-                newComment.textContent = `Visitor ${visitorNumber}: ${commentText}`; // Use the unique visitor number
-                output.appendChild(newComment); // Add the comment to the output
-                commentBox.value = ''; // Clear the comment box
-                output.scrollTop = output.scrollHeight; // Scroll to the bottom
-
-                // Save comment to local storage
-                saveComment(newComment.textContent);
-            }
-        }
-
-        // Function to save comment to local storage
-        function saveComment(comment) {
-            let comments = JSON.parse(localStorage.getItem('comments')) || [];
-            comments.push(comment);
-            localStorage.setItem('comments', JSON.stringify(comments));
-        }
-
-        // Load comments from local storage
+        // Function to load comments
         function loadComments() {
             let comments = JSON.parse(localStorage.getItem('comments')) || [];
+            output.innerHTML = ''; // Clear the output
             comments.forEach(comment => {
                 const newComment = document.createElement('div');
                 newComment.textContent = comment; // Set the comment text
                 output.appendChild(newComment); // Add the comment to the output
             });
-            output.scrollTop = output.scrollHeight; // Scroll to the bottom after loading
+            output.scrollTop = output.scrollHeight; // Scroll to the bottom
         }
 
-        // Function to clear all comments
-        function clearAllComments() {
-            output.innerHTML = ''; // Clear the output area
-            localStorage.removeItem('comments'); // Clear comments from local storage
-        }
+        // Load existing comments initially
+        loadComments();
 
-        // Add event listener for the clear button
-        document.getElementById('clearButton').addEventListener('click', clearAllComments);
+        // Function to submit a comment
+        document.getElementById('submitComment').onclick = function() {
+            const commentInput = document.getElementById('commentInput');
+            const comment = `Visitor ${visitorCount}: ${commentInput.value}`;
+            if (commentInput.value.trim() !== '') {
+                // Save comment to local storage
+                let comments = JSON.parse(localStorage.getItem('comments')) || [];
+                comments.push(comment);
+                localStorage.setItem('comments', JSON.stringify(comments));
+                commentInput.value = ''; // Clear the input
+                visitorCount++; // Increment visitor count
+                loadComments(); // Reload comments
+            }
+        };
 
         // Clear comments every 2 minutes
         setInterval(() => {
-            clearAllComments(); // Clear comments using the clear function
+            localStorage.removeItem('comments'); // Clear comments from local storage
+            output.innerHTML = ''; // Clear comments from the displayed output
+            visitorCount = 1; // Reset visitor count
         }, 120000); // 120000 milliseconds = 2 minutes
 
-        // Add event listener for Enter key
-        commentBox.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault(); // Prevent the default action (like a new line)
-                submitComment(); // Call the submit comment function
-            }
-        });
-
-        // Load comments on page load
-        loadComments();
+        // Load comments periodically
+        setInterval(loadComments, 2000); // Load comments every 2 seconds
     </script>
 </body>
 </html>
